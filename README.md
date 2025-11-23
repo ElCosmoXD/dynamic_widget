@@ -156,7 +156,8 @@ Finally, pass the listener to build method.
 ```
 
 **THIS FORK ALSO SUPPORTS WIDGETS THAT NEED A STATE TO BE UPDATED ON SCREEN** you only need to define a callback to the ``setState`` function of a ``StatefulWidget`` and call it from ``onClick`` or ``onValueChanged``.
-For widgets that have ``onChanged`` functions (like ``Slider``), you have to use ``onValueChanged`` in order to get their new values.
+
+For widgets that have ``onChanged`` functions (like ``Slider``), you have to use the "value_changed_event" property in the json and ``onValueChanged`` to get the new values.
 
 ## How to write the json code
 You don't need to write the json code by hand, you can export your flutter code to json code efficiently with DynamicWidgetJsonExportor widget. You just need to wrap your flutter code with DynamicWidgetJsonExportor widget, then invoke its `exportJsonString()` method, look at following example, click the "export" button, it will find the DynamicWidgetJsonExportor widget, and export its child to json code efficiently.
