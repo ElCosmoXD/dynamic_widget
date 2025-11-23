@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 class TextWidgetParser implements WidgetParser {
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener? listener) {
+      EventsListener? listener) {
     String? data = map['data'];
     String? textAlignString = map['textAlign'];
     String? overflow = map['overflow'];
@@ -96,7 +96,7 @@ class TextWidgetParser implements WidgetParser {
 }
 
 class TextSpanParser {
-  TextSpan parse(Map<String, dynamic> map, ClickListener? listener) {
+  TextSpan parse(Map<String, dynamic> map, EventsListener? listener) {
     String? clickEvent = map.containsKey("recognizer") ? map['recognizer'] : "";
     var textSpan = TextSpan(
         text: map['text'],
@@ -123,7 +123,7 @@ class TextSpanParser {
   }
 
   void parseChildren(
-      TextSpan textSpan, List<dynamic> childrenSpan, ClickListener? listener) {
+      TextSpan textSpan, List<dynamic> childrenSpan, EventsListener? listener) {
     for (var childmap in childrenSpan) {
       textSpan.children!.add(parse(childmap, listener));
     }

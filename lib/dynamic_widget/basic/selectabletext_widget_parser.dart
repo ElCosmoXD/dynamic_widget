@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class SelectableTextWidgetParser implements WidgetParser {
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener? listener) {
+      EventsListener? listener) {
     String? data = map['data'];
     String? textAlignString = map['textAlign'];
     int? maxLines = map['maxLines'];
@@ -79,7 +79,7 @@ class SelectableTextWidgetParser implements WidgetParser {
 }
 
 class SelectableTextSpanParser {
-  TextSpan parse(Map<String, dynamic> map, ClickListener? listener) {
+  TextSpan parse(Map<String, dynamic> map, EventsListener? listener) {
     String? clickEvent = map.containsKey("recognizer") ? map['recognizer'] : "";
     var textSpan = TextSpan(
         text: map['text'],
@@ -98,7 +98,7 @@ class SelectableTextSpanParser {
   }
 
   void parseChildren(
-      TextSpan textSpan, List<dynamic> childrenSpan, ClickListener? listener) {
+      TextSpan textSpan, List<dynamic> childrenSpan, EventsListener? listener) {
     for (var childmap in childrenSpan) {
       textSpan.children!.add(parse(childmap, listener));
     }

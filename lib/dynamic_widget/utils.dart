@@ -1057,7 +1057,7 @@ String exportDropCapPosition(DropCapPosition? dropCapPosition) {
 }
 
 DropCap? parseDropCap(Map<String, dynamic>? map, BuildContext buildContext,
-    ClickListener? listener) {
+    EventsListener? listener) {
   if (map == null) {
     return null;
   }

@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 class OpacityWidgetParser extends WidgetParser {
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener? listener) {
+      EventsListener? listener) {
     return Opacity(
       opacity: map["opacity"]?.toDouble(),
       alwaysIncludeSemantics: map.containsKey("alwaysIncludeSemantics")

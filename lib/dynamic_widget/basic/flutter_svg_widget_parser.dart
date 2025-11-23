@@ -9,7 +9,7 @@ class SvgPictureWidgetParser extends WidgetParser {
   Widget parse(
     Map<String, dynamic> map,
     BuildContext buildContext,
-    ClickListener? listener,
+    EventsListener? listener,
   ) {
     final String assetName = map['assetName'];
     final String? package = map.containsKey('package') ? map['package'] : null;
@@ -105,7 +105,7 @@ class NetworkSvgPictureWidgetParser extends WidgetParser {
   Widget parse(
     Map<String, dynamic> map,
     BuildContext buildContext,
-    ClickListener? listener,
+    EventsListener? listener,
   ) {
     final String url = map['url'];
     final Map<String, String>? headers =

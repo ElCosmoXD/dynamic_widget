@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 class BaselineWidgetParser extends WidgetParser {
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener? listener) {
+      EventsListener? listener) {
     return Baseline(
       baseline: map["baseline"]?.toDouble(),
       baselineType: map["baselineType"] == "alphabetic"

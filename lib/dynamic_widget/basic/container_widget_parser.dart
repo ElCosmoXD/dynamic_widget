@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 class ContainerWidgetParser extends WidgetParser {
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener? listener) {
+      EventsListener? listener) {
     AlignmentGeometry? alignment = parseAlignmentGeometry(map['alignment']);
     Color? color = parseHexColor(map['color']);
     BoxConstraints constraints = parseBoxConstraints(map['constraints']);

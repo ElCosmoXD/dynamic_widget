@@ -14,7 +14,7 @@ class OffstageWidgetParser extends WidgetParser {
 
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener? listener) {
+      EventsListener? listener) {
     return Offstage(
       offstage: map.containsKey("offstage") ? map['offstage'] : true,
       child: DynamicWidgetBuilder.buildFromMap(

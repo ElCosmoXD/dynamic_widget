@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 class ExpandedSizedBoxWidgetParser extends WidgetParser {
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener? listener) {
+      EventsListener? listener) {
     return SizedBox.expand(
       child: DynamicWidgetBuilder.buildFromMap(
           map["child"], buildContext, listener),
@@ -28,7 +28,7 @@ class ExpandedSizedBoxWidgetParser extends WidgetParser {
 class SizedBoxWidgetParser extends WidgetParser {
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener? listener) {
+      EventsListener? listener) {
     return SizedBox(
       width: map["width"],
       height: map["height"],

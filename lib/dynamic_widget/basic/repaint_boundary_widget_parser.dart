@@ -6,7 +6,7 @@ class RepaintBoundaryWidgetParser extends WidgetParser {
   Widget parse(
     Map<String, dynamic> map,
     BuildContext buildContext,
-    ClickListener? listener,
+    EventsListener? listener,
   ) {
     final String? clickEvent =
         map.containsKey("click_event") ? map['click_event'] : "";

@@ -19,7 +19,7 @@ class OverflowBoxWidgetParser extends WidgetParser {
 
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener? listener) {
+      EventsListener? listener) {
     return OverflowBox(
       alignment: map.containsKey("alignment")
           ? parseAlignmentGeometry(map["alignment"])!

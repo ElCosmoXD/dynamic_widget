@@ -34,12 +34,17 @@ import 'package:dynamic_widget/dynamic_widget/basic/sizedbox_widget_parser.dart'
 import 'package:dynamic_widget/dynamic_widget/basic/stack_positioned_widgets_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/basic/text_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/basic/wrap_widget_parser.dart';
+import 'package:dynamic_widget/dynamic_widget/common/slider_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/scrolling/gridview_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/scrolling/listview_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/scrolling/pageview_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/scrolling/single_child_scroll_view_widget_parser.dart';
+
+import 'package:dynamic_widget/state_manager.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+
 import 'package:logging/logging.dart';
 
 import 'dynamic_widget/basic/cliprrect_widget_parser.dart';
@@ -84,15 +89,20 @@ class DynamicWidgetBuilder {
     LimitedBoxWidgetParser(),
     OffstageWidgetParser(),
     OverflowBoxWidgetParser(),
-    ElevatedButtonParser(),
     DividerWidgetParser(),
-    TextButtonParser(),
     RotatedBoxWidgetParser(),
     CardParser(),
     SingleChildScrollViewParser(),
     ColoredBoxWidgetParser(),
     RepaintBoundaryWidgetParser(),
     SvgPictureWidgetParser(),
+
+    // Buttons
+    ElevatedButtonParser(),
+    TextButtonParser(),
+
+    // State-based widgets
+    SliderParser(),
 
     // Here, we're going to place the disabled Widgets until we make sure it's safe to use
     // NetworkImageWidgetParser(),
@@ -102,6 +112,8 @@ class DynamicWidgetBuilder {
   static final _widgetNameParserMap = <String, WidgetParser>{};
 
   static bool _defaultParserInited = false;
+  static int widgetCount = 0;
+  static StateManager stateManager = StateManager();
 
   // use this method for adding your custom widget parser
   static void addParser(WidgetParser parser) {
@@ -121,16 +133,19 @@ class DynamicWidgetBuilder {
   }
 
   static Widget? build(
-      String json, BuildContext buildContext, ClickListener listener) {
+      String json, BuildContext buildContext, EventsListener listener) {
+    
+    widgetCount = 0; // Must be reset in case of rebuilding the page 
+
     initDefaultParsersIfNess();
     var map = jsonDecode(json);
-    ClickListener _listener = listener;
+    EventsListener _listener = listener;
     var widget = buildFromMap(map, buildContext, _listener);
     return widget;
   }
 
   static Widget? buildFromMap(Map<String, dynamic>? map,
-      BuildContext buildContext, ClickListener? listener) {
+      BuildContext buildContext, EventsListener? listener) {
     initDefaultParsersIfNess();
     if (map == null) {
       return null;
@@ -151,13 +166,14 @@ class DynamicWidgetBuilder {
   }
 
   static List<Widget> buildWidgets(List<dynamic> values,
-      BuildContext buildContext, ClickListener? listener) {
+      BuildContext buildContext, EventsListener? listener) {
     initDefaultParsersIfNess();
     List<Widget> rt = [];
     for (var value in values) {
       var buildFromMap2 = buildFromMap(value, buildContext, listener);
       if (buildFromMap2 != null) {
         rt.add(buildFromMap2);
+        widgetCount++;
       }
     }
     return rt;
@@ -199,7 +215,7 @@ class DynamicWidgetBuilder {
 abstract class WidgetParser {
   /// parse the json map into a flutter widget.
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener? listener);
+      EventsListener? listener);
 
   /// the widget type name for example:
   /// {"type" : "Text", "data" : "Denny"}
@@ -217,27 +233,50 @@ abstract class WidgetParser {
   bool matchWidgetForExport(Widget? widget) => widget.runtimeType == widgetType;
 }
 
-abstract class ClickListener {
-  void onClicked(String? event);
+// The main class for the widget listeners, this new design is meant to be used
+// with entire pages instead of single widgets (single widgets should work, though).
+// In case you are using state-requiring widgets, you must call 'useState' after every
+// callback that updates the in-screen values of the widgets such as 'onValueChanged'.
+class EventsListener {
+  // event: The app event to be triggered
+  // id: The Widget ID, this is useful when creating entire pages using a json
+  void onClicked(String? event, int id) {}
+
+  // event: The app event to be triggered
+  // id: The Widget ID, this is useful when creating entire pages using a json
+  // value: The value of the changed field
+  void onValueChanged(String? event, int id, dynamic value) {}
 }
 
-class NonResponseWidgetClickListener implements ClickListener {
+class NonResponseWidgetClickListener implements EventsListener {
   static final Logger log = Logger('NonResponseWidgetClickListener');
 
   @override
-  void onClicked(String? event) {
+  void onClicked(String? event, int id) {
     log.info("receiver click event: " + event!);
     print("receiver click event: " + event);
   }
-}
-
-class DefaultClickListener implements ClickListener {
-  final Function(String?) onClick;
-
-  DefaultClickListener({required this.onClick});
 
   @override
-  void onClicked(String? event) {
-    onClick(event);
+  void onValueChanged(String? event, int id, value) {
+    log.info("reciever value changed event: " + event!);
+    print("reciever value changed event: " + event);
+  }
+}
+
+class DefaultClickListener implements EventsListener {
+  final Function(String?)? onClick;
+  final Function(String?, dynamic)? onValueChange;
+
+  DefaultClickListener({this.onClick, this.onValueChange});
+
+  @override
+  void onClicked(String? event, int id) {
+    onClick?.call(event);
+  }
+
+  @override
+  void onValueChanged(String? event, int id, value) {
+    onValueChange?.call(event, value);
   }
 }

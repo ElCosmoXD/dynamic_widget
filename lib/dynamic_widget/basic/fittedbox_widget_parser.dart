@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 class FittedBoxWidgetParser extends WidgetParser {
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener? listener) {
+      EventsListener? listener) {
     return FittedBox(
       alignment: map.containsKey("alignment")
           ? parseAlignmentGeometry(map["alignment"])!

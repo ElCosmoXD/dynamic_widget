@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 class PositionedWidgetParser extends WidgetParser {
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener? listener) {
+      EventsListener? listener) {
     return Positioned(
       child: DynamicWidgetBuilder.buildFromMap(
           map["child"], buildContext, listener)!,
@@ -43,7 +43,7 @@ class PositionedWidgetParser extends WidgetParser {
 class StackWidgetParser extends WidgetParser {
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener? listener) {
+      EventsListener? listener) {
     return Stack(
       alignment: map.containsKey("alignment")
           ? parseAlignmentGeometry(map["alignment"])!

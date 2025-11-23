@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 class WrapWidgetParser extends WidgetParser {
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener? listener) {
+      EventsListener? listener) {
     return Wrap(
       direction: map.containsKey("direction")
           ? parseAxis(map["direction"])

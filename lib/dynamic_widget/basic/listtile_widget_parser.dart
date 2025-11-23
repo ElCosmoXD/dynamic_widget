@@ -6,7 +6,7 @@ import '../utils.dart';
 class ListTileWidgetParser extends WidgetParser {
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener? listener) {
+      EventsListener? listener) {
     bool isThreeLine =
         map.containsKey("isThreeLine") ? map["isThreeLine"] : false;
     EdgeInsetsGeometry? contentPadding = map.containsKey("contentPadding")

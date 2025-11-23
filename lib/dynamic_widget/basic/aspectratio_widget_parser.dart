@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 class AspectRatioWidgetParser extends WidgetParser {
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener? listener) {
+      EventsListener? listener) {
     return AspectRatio(
       aspectRatio: map["aspectRatio"]?.toDouble(),
       child: DynamicWidgetBuilder.buildFromMap(

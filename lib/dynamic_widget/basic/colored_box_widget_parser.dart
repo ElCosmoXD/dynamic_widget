@@ -7,7 +7,7 @@ class ColoredBoxWidgetParser extends WidgetParser {
   Widget parse(
     Map<String, dynamic> map,
     BuildContext buildContext,
-    ClickListener? listener,
+    EventsListener? listener,
   ) {
     Color color = parseHexColor(map['color'])!;
 
