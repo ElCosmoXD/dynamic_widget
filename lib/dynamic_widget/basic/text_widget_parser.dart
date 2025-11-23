@@ -103,7 +103,7 @@ class TextSpanParser {
         style: parseTextStyle(map['style']),
         recognizer: TapGestureRecognizer()
           ..onTap = () {
-            listener!.onClicked(clickEvent);
+            listener!.onClicked(clickEvent, DynamicWidgetBuilder.widgetCount);
           },
         children: []);
 

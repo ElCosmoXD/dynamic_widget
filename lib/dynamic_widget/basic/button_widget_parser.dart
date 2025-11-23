@@ -57,7 +57,7 @@ class ElevatedButtonParser extends WidgetParser {
 
     return ElevatedButton(
       onPressed: () {
-        listener!.onClicked(clickEvent);
+        listener!.onClicked(clickEvent, DynamicWidgetBuilder.widgetCount);
       },
       style: ButtonStyle(
         foregroundColor: map.containsKey("foregroundColor")
@@ -153,7 +153,7 @@ class TextButtonParser extends WidgetParser {
 
     return TextButton(
       onPressed: () {
-        listener!.onClicked(clickEvent);
+        listener!.onClicked(clickEvent, DynamicWidgetBuilder.widgetCount);
       },
       style: ButtonStyle(
         foregroundColor: map.containsKey("foregroundColor")

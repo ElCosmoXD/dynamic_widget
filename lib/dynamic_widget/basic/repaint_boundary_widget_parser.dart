@@ -22,7 +22,7 @@ class RepaintBoundaryWidgetParser extends WidgetParser {
     if (listener != null && (clickEvent != null && clickEvent.isNotEmpty)) {
       return GestureDetector(
         onTap: () {
-          listener.onClicked(clickEvent);
+          listener.onClicked(clickEvent, DynamicWidgetBuilder.widgetCount);
         },
         child: widget,
       );

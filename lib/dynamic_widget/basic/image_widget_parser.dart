@@ -63,7 +63,7 @@ class AssetImageWidgetParser extends WidgetParser {
     if (listener != null && (clickEvent != null && clickEvent.isNotEmpty)) {
       return GestureDetector(
         onTap: () {
-          listener.onClicked(clickEvent);
+          listener.onClicked(clickEvent, DynamicWidgetBuilder.widgetCount);
         },
         child: widget,
       );
@@ -243,7 +243,7 @@ class NetworkImageWidgetParser extends WidgetParser {
     if (listener != null && (clickEvent != null && clickEvent.isNotEmpty)) {
       return GestureDetector(
         onTap: () {
-          listener.onClicked(clickEvent);
+          listener.onClicked(clickEvent, DynamicWidgetBuilder.widgetCount);
         },
         child: widget,
       );

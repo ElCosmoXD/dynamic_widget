@@ -34,7 +34,7 @@ class ContainerWidgetParser extends WidgetParser {
     if (listener != null && clickEvent != null) {
       return GestureDetector(
         onTap: () {
-          listener.onClicked(clickEvent);
+          listener.onClicked(clickEvent, DynamicWidgetBuilder.widgetCount);
         },
         child: containerWidget,
       );

@@ -44,7 +44,7 @@ class ListTileWidgetParser extends WidgetParser {
       enabled: enabled,
       onTap: () {
         if (listener != null && tapEvent != null) {
-          listener.onClicked(tapEvent);
+          listener.onClicked(tapEvent, DynamicWidgetBuilder.widgetCount);
         }
       },
       selected: selected,
