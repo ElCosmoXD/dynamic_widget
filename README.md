@@ -148,6 +148,8 @@ class DefaultClickListener implements EventsListener {
 }
 ```
 
+**Note**: If you see that your widget id is ``-1`` it's because you have to manually set the id as a property in the json of the Widget. This is because Flutter resets the view every time you change the state, so there's no way to create an automatic ID system without introducing new static variables.
+
 Finally, pass the listener to build method.
 ```dart
   Widget? _buildWidget() {

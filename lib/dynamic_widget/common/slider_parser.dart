@@ -10,7 +10,7 @@ class SliderParser extends WidgetParser {
         ? map["value_changed_event"]
         : "";
 
-    int widgetId = DynamicWidgetBuilder.widgetCount;
+    int widgetId = map.containsKey("id") ? map["id"] : -1;
     double value = map.containsKey("value") ? map["value"] : 0.0;
 
     // Even though is kind of weird to create the state with a null widget, this is

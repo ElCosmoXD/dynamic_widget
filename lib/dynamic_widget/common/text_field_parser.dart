@@ -11,7 +11,7 @@ class TextFieldParser extends WidgetParser {
         ? map["value_changed_event"]
         : null;
   
-    int widgetId = DynamicWidgetBuilder.widgetCount;
+    int widgetId = map.containsKey("id") ? map["id"] : -1;
     DynamicWidgetBuilder.stateManager
         .createStateIfNotExists(widgetId, null, "");
 

@@ -136,8 +136,7 @@ class DynamicWidgetBuilder {
 
   static Widget? build(
       String json, BuildContext buildContext, EventsListener listener) {
-    
-    widgetCount = 0; // Must be reset in case of rebuilding the page 
+    widgetCount = 0; // Must be reset in case of rebuilding the page
 
     initDefaultParsersIfNess();
     var map = jsonDecode(json);
@@ -175,7 +174,6 @@ class DynamicWidgetBuilder {
       var buildFromMap2 = buildFromMap(value, buildContext, listener);
       if (buildFromMap2 != null) {
         rt.add(buildFromMap2);
-        widgetCount++;
       }
     }
     return rt;
