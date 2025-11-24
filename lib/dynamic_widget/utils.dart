@@ -1,5 +1,6 @@
 import 'package:dynamic_widget/dynamic_widget.dart';
 import 'package:dynamic_widget/dynamic_widget/drop_cap_text.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 TextAlign parseTextAlign(String? textAlignString) {
@@ -240,16 +241,17 @@ TextStyle? parseTextStyle(Map<String, dynamic>? map) {
   String? fontWeight = map['fontWeight'];
   FontStyle fontStyle =
       'italic' == map['fontStyle'] ? FontStyle.italic : FontStyle.normal;
+  String? backgroundColor = map["backgroundColor"];
 
   return TextStyle(
-    color: parseHexColor(color),
-    debugLabel: debugLabel,
-    decoration: parseTextDecoration(decoration),
-    fontSize: fontSize,
-    fontFamily: fontFamily,
-    fontStyle: fontStyle,
-    fontWeight: parseFontWeight(fontWeight),
-  );
+      color: parseHexColor(color),
+      debugLabel: debugLabel,
+      decoration: parseTextDecoration(decoration),
+      fontSize: fontSize,
+      fontFamily: fontFamily,
+      fontStyle: fontStyle,
+      fontWeight: parseFontWeight(fontWeight),
+      backgroundColor: parseHexColor(backgroundColor));
 }
 
 Map<String, dynamic>? exportTextStyle(TextStyle? textStyle) {
@@ -1207,4 +1209,171 @@ Radius parseRadius(String radius) {
   } else {
     return Radius.zero;
   }
+}
+
+// The functions below are AI generated since there are so much properties to parse
+// they might be some tweaks to fix them.
+
+InputDecoration? parseInputDecoration(Map<String, dynamic>? map) {
+  if (map == null) {
+    return null;
+  }
+
+  return InputDecoration(
+    hintText: map.containsKey("hintText") ? map["hintText"] : null,
+    helperText: map.containsKey("helperText") ? map["helperText"] : null,
+    labelText: map.containsKey("labelText") ? map["labelText"] : null,
+    errorText: map.containsKey("errorText") ? map["errorText"] : null,
+    prefixText: map.containsKey("prefixText") ? map["prefixText"] : null,
+    suffixText: map.containsKey("suffixText") ? map["suffixText"] : null,
+    hintStyle:
+        map.containsKey("hintStyle") ? parseTextStyle(map["hintStyle"]) : null,
+    helperStyle: map.containsKey("helperStyle")
+        ? parseTextStyle(map["helperStyle"])
+        : null,
+    labelStyle: map.containsKey("labelStyle")
+        ? parseTextStyle(map["labelStyle"])
+        : null,
+    errorStyle: map.containsKey("errorStyle")
+        ? parseTextStyle(map["errorStyle"])
+        : null,
+    prefixStyle: map.containsKey("prefixStyle")
+        ? parseTextStyle(map["prefixStyle"])
+        : null,
+    suffixStyle: map.containsKey("suffixStyle")
+        ? parseTextStyle(map["suffixStyle"])
+        : null,
+    fillColor:
+        map.containsKey("fillColor") ? parseHexColor(map["fillColor"]) : null,
+    filled: map.containsKey("filled") ? map["filled"] : false,
+    isDense: map.containsKey("isDense") ? map["isDense"] : false,
+    contentPadding: map.containsKey("contentPadding")
+        ? parseEdgeInsetsGeometry(map["contentPadding"])
+        : null,
+    border: map.containsKey("border") ? parseBorder(map["border"]) : null,
+    enabledBorder: map.containsKey("enabledBorder")
+        ? parseBorder(map["enabledBorder"])
+        : null,
+    focusedBorder: map.containsKey("focusedBorder")
+        ? parseBorder(map["focusedBorder"])
+        : null,
+    errorBorder:
+        map.containsKey("errorBorder") ? parseBorder(map["errorBorder"]) : null,
+    focusedErrorBorder: map.containsKey("focusedErrorBorder")
+        ? parseBorder(map["focusedErrorBorder"])
+        : null,
+  );
+}
+
+Map<String, dynamic>? exportInputDecoration(InputDecoration decoration) {
+  return <String, dynamic>{
+    "hintText": decoration.hintText,
+    "helperText": decoration.helperText,
+    "labelText": decoration.labelText,
+    "errorText": decoration.errorText,
+    "prefixText": decoration.prefixText,
+    "suffixText": decoration.suffixText,
+    "hintStyle": exportTextStyle(decoration.hintStyle),
+    "helperStyle": exportTextStyle(decoration.helperStyle),
+    "labelStyle": exportTextStyle(decoration.labelStyle),
+    "errorStyle": exportTextStyle(decoration.errorStyle),
+    "prefixStyle": exportTextStyle(decoration.prefixStyle),
+    "suffixStyle": exportTextStyle(decoration.suffixStyle),
+    "fillColor": decoration.fillColor != null
+        ? decoration.fillColor!.toARGB32().toRadixString(16)
+        : null,
+    "filled": decoration.filled,
+    "isDense": decoration.isDense,
+    "contentPadding": decoration.contentPadding != null
+        ? exportEdgeInsets(decoration.contentPadding)
+        : null,
+    "border":
+        decoration.border != null ? exportBorder(decoration.border) : null,
+    "enabledBorder": decoration.enabledBorder != null
+        ? exportBorder(decoration.enabledBorder)
+        : null,
+    "focusedBorder": decoration.focusedBorder != null
+        ? exportBorder(decoration.focusedBorder)
+        : null,
+    "errorBorder": decoration.errorBorder != null
+        ? exportBorder(decoration.errorBorder)
+        : null,
+    "focusedErrorBorder": decoration.focusedErrorBorder != null
+        ? exportBorder(decoration.focusedErrorBorder)
+        : null,
+  };
+}
+
+InputBorder? parseBorder(Map<String, dynamic>? map) {
+  if (map == null) {
+    return null;
+  }
+
+  String borderType = map.containsKey("type") ? map["type"] : "outline";
+  Color borderColor = parseHexColor(
+          map.containsKey("borderSide") ? map["borderSide"]["color"] : null) ??
+      Colors.grey;
+  double borderWidth =
+      (map.containsKey("borderSide") ? map["borderSide"]["width"] : 1.0)
+              ?.toDouble() ??
+          1.0;
+
+  switch (borderType) {
+    case "underline":
+      return UnderlineInputBorder(
+        borderSide: BorderSide(color: borderColor, width: borderWidth),
+      );
+    case "outline":
+    default:
+      double borderRadius = map.containsKey("borderRadius")
+          ? map["borderRadius"]?.toDouble() ?? 4.0
+          : 4.0;
+      return OutlineInputBorder(
+        borderRadius: BorderRadius.circular(borderRadius),
+        borderSide: BorderSide(color: borderColor, width: borderWidth),
+      );
+  }
+}
+
+Map<String, dynamic>? exportBorder(InputBorder? border) {
+  if (border == null) {
+    return null;
+  }
+
+  String borderType = "outline";
+  Color? borderColor = Colors.grey;
+  double borderWidth = 1.0;
+  double borderRadius = 4.0;
+
+  if (border is OutlineInputBorder) {
+    borderType = "outline";
+    borderColor = border.borderSide.color;
+    borderWidth = border.borderSide.width;
+    borderRadius = border.borderRadius.topLeft.x;
+  } else if (border is UnderlineInputBorder) {
+    borderType = "underline";
+    borderColor = border.borderSide.color;
+    borderWidth = border.borderSide.width;
+  }
+
+  return <String, dynamic>{
+    "type": borderType,
+    "borderSide": <String, dynamic>{
+      "color": borderColor.toARGB32().toRadixString(16),
+      "width": borderWidth,
+    },
+    if (borderType == "outline") "borderRadius": borderRadius,
+  };
+}
+
+String? exportEdgeInsets(EdgeInsetsGeometry? edgeInsets) {
+  if (edgeInsets == null) {
+    return null;
+  }
+
+  if (edgeInsets is EdgeInsets) {
+    return "${edgeInsets.left},${edgeInsets.top},${edgeInsets.right},${edgeInsets.bottom}";
+  }
+
+  return null;
 }

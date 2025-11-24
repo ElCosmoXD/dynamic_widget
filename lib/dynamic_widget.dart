@@ -35,6 +35,7 @@ import 'package:dynamic_widget/dynamic_widget/basic/stack_positioned_widgets_par
 import 'package:dynamic_widget/dynamic_widget/basic/text_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/basic/wrap_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/common/slider_parser.dart';
+import 'package:dynamic_widget/dynamic_widget/common/text_field_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/scrolling/gridview_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/scrolling/listview_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/scrolling/pageview_widget_parser.dart';
@@ -103,6 +104,7 @@ class DynamicWidgetBuilder {
 
     // State-based widgets
     SliderParser(),
+    TextFieldParser(),
 
     // Here, we're going to place the disabled Widgets until we make sure it's safe to use
     // NetworkImageWidgetParser(),
