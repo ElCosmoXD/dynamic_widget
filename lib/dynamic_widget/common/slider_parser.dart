@@ -36,7 +36,14 @@ class SliderParser extends WidgetParser {
 
   @override
   Map<String, dynamic>? export(Widget? widget, BuildContext? buildContext) {
-    throw UnimplementedError();
+    final realWidget = widget as Slider;
+
+    return <String, dynamic> {
+      "type": widgetName,
+      "value": realWidget.value,
+      "min": realWidget.min,
+      "max": realWidget.max
+    };
   }
 
   @override
