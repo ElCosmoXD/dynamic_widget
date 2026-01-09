@@ -25,13 +25,14 @@ class TextWidgetParser implements WidgetParser {
     var textSpan;
     var textSpanParser = TextSpanParser();
     if (map.containsKey("textSpan")) {
+      // TODO: TextSpans also include text, add the text to the global state manager
       textSpan = textSpanParser.parse(map['textSpan'], listener);
     }
 
     late Widget widget;
     if (textSpan == null) {
       widget = Text(
-        data!,
+        widgetId != -1 ? DynamicWidgetBuilder.stateManager.getStateValue(widgetId) : data,
         textAlign: parseTextAlign(textAlignString),
         overflow: parseTextOverflow(overflow),
         maxLines: maxLines,
