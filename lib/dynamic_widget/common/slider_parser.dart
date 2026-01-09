@@ -6,12 +6,13 @@ class SliderParser extends WidgetParser {
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
       EventsListener? listener) {
-    String valueChangedEvent = map.containsKey("value_changed_event")
+    String? valueChangedEvent = map.containsKey("value_changed_event")
         ? map["value_changed_event"]
-        : "";
+        : null;
 
     int widgetId = map.containsKey("id") ? map["id"] : -1;
     double value = map.containsKey("value") ? map["value"] : 0.0;
+    int? divisions = map.containsKey("divisions") ? map["divisions"] : null;
 
     // Even though is kind of weird to create the state with a null widget, this is
     // required to keep the value of the widget.
@@ -21,6 +22,7 @@ class SliderParser extends WidgetParser {
         value: DynamicWidgetBuilder.stateManager.getStateValue(widgetId),
         min: map.containsKey("min") ? map["min"] : 0.0,
         max: map.containsKey("max") ? map["max"] : 1.0,
+        divisions: divisions,
 
         onChanged: (value) {
           listener?.onValueChanged(
@@ -42,7 +44,8 @@ class SliderParser extends WidgetParser {
       "type": widgetName,
       "value": realWidget.value,
       "min": realWidget.min,
-      "max": realWidget.max
+      "max": realWidget.max,
+      "divisions": realWidget.divisions ?? 1,
     };
   }
 
