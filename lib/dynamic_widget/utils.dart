@@ -1250,17 +1250,18 @@ InputDecoration? parseInputDecoration(Map<String, dynamic>? map) {
     contentPadding: map.containsKey("contentPadding")
         ? parseEdgeInsetsGeometry(map["contentPadding"])
         : null,
-    border: map.containsKey("border") ? parseBorder(map["border"]) : null,
+    border: map.containsKey("border") ? parseInputBorder(map["border"]) : null,
     enabledBorder: map.containsKey("enabledBorder")
-        ? parseBorder(map["enabledBorder"])
+        ? parseInputBorder(map["enabledBorder"])
         : null,
     focusedBorder: map.containsKey("focusedBorder")
-        ? parseBorder(map["focusedBorder"])
+        ? parseInputBorder(map["focusedBorder"])
         : null,
-    errorBorder:
-        map.containsKey("errorBorder") ? parseBorder(map["errorBorder"]) : null,
+    errorBorder: map.containsKey("errorBorder")
+        ? parseInputBorder(map["errorBorder"])
+        : null,
     focusedErrorBorder: map.containsKey("focusedErrorBorder")
-        ? parseBorder(map["focusedErrorBorder"])
+        ? parseInputBorder(map["focusedErrorBorder"])
         : null,
   );
 }
@@ -1304,7 +1305,7 @@ Map<String, dynamic>? exportInputDecoration(InputDecoration decoration) {
   };
 }
 
-InputBorder? parseBorder(Map<String, dynamic>? map) {
+InputBorder? parseInputBorder(Map<String, dynamic>? map) {
   if (map == null) {
     return null;
   }

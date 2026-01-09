@@ -565,7 +565,7 @@ class PreviewPage extends StatelessWidget {
   }
 }
 
-class DefaultClickListener implements ClickListener {
+class DefaultClickListener implements EventsListener {
   @override
   void onClicked(String? event) {
     print("Receive click event: " + (event == null ? "" : event));
