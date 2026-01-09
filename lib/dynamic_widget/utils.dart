@@ -1,7 +1,7 @@
 import 'package:dynamic_widget/dynamic_widget.dart';
 import 'package:dynamic_widget/dynamic_widget/drop_cap_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
 
 TextAlign parseTextAlign(String? textAlignString) {
   //left the system decide
@@ -1377,4 +1377,98 @@ String? exportEdgeInsets(EdgeInsetsGeometry? edgeInsets) {
   }
 
   return null;
+}
+
+TextInputType parseTextInputType(String? typeString) {
+  switch (typeString) {
+    case "text":
+      return TextInputType.text;
+    case "multiline":
+      return TextInputType.multiline;
+    case "number":
+      return TextInputType.number;
+    case "phone":
+      return TextInputType.phone;
+    case "emailAddress":
+      return TextInputType.emailAddress;
+    case "url":
+      return TextInputType.url;
+    case "visiblePassword":
+      return TextInputType.visiblePassword;
+    case "name":
+      return TextInputType.name;
+    case "streetAddress":
+      return TextInputType.streetAddress;
+    default:
+      return TextInputType.text;
+  }
+}
+
+String exportTextInputType(TextInputType keyboardType) {
+  if (keyboardType == TextInputType.text) {
+    return "text";
+  } else if (keyboardType == TextInputType.multiline) {
+    return "multiline";
+  } else if (keyboardType == TextInputType.number) {
+    return "number";
+  } else if (keyboardType == TextInputType.phone) {
+    return "phone";
+  } else if (keyboardType == TextInputType.emailAddress) {
+    return "emailAddress";
+  } else if (keyboardType == TextInputType.url) {
+    return "url";
+  } else if (keyboardType == TextInputType.visiblePassword) {
+    return "visiblePassword";
+  } else if (keyboardType == TextInputType.name) {
+    return "name";
+  } else if (keyboardType == TextInputType.streetAddress) {
+    return "streetAddress";
+  }
+  return "text";
+}
+
+List<TextInputFormatter> parseInputFormatters(List<dynamic>? formatters) {
+  if (formatters == null || formatters.isEmpty) {
+    return [];
+  }
+
+  List<TextInputFormatter> result = [];
+  for (var formatter in formatters) {
+    if (formatter is Map<String, dynamic>) {
+      String type = formatter['type'] ?? 'lengthLimiting';
+
+      switch (type) {
+        case 'lengthLimiting':
+          int maxLength = formatter['maxLength'] ?? 100;
+          result.add(LengthLimitingTextInputFormatter(maxLength));
+
+          break;
+
+        case 'digitsOnly':
+          result.add(FilteringTextInputFormatter.digitsOnly);
+          break;
+      }
+    }
+  }
+  return result;
+}
+
+List<Map<String, dynamic>> exportInputFormatter(TextInputFormatter formatter) {
+  List<Map<String, dynamic>> result = [];
+  
+  if (formatter is LengthLimitingTextInputFormatter) {
+    result.add({
+      "type": "lengthLimiting",
+      "maxLength": formatter.maxLength,
+    });
+  }
+
+  if (formatter is FilteringTextInputFormatter &&
+      formatter == FilteringTextInputFormatter.digitsOnly) {
+    result.add({
+      "type": "digitsOnly",
+    });
+  }
+
+  return result;
 }

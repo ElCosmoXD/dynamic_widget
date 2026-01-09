@@ -7,8 +7,8 @@ class TextFieldParser extends WidgetParser {
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
       EventsListener? listener) {
-    String? valueChangedEvent = map.containsKey("value_changed_event")
-        ? map["value_changed_event"]
+    String? valueChangedEvent = map.containsKey("valueChangedEvent")
+        ? map["valueChangedEvent"]
         : null;
   
     int widgetId = map.containsKey("id") ? map["id"] : -1;
@@ -23,6 +23,12 @@ class TextFieldParser extends WidgetParser {
       style: map.containsKey("style") ? parseTextStyle(map["style"]) : null,
       decoration: map.containsKey("decoration")
           ? parseInputDecoration(map["decoration"])
+          : null,
+      keyboardType: map.containsKey("keyboardType")
+          ? parseTextInputType(map["keyboardType"])
+          : TextInputType.text,
+      inputFormatters: map.containsKey("inputFormatters")
+          ? parseInputFormatters(map["inputFormatters"])
           : null,
       onChanged: (value) {
         listener?.onValueChanged(valueChangedEvent, widgetId, value);
@@ -41,12 +47,17 @@ class TextFieldParser extends WidgetParser {
 
     return <String, dynamic>{
       "type": widgetName,
+      "id": -1,
       "obscureText": realWidget.obscureText,
       "obscuringCharacter": realWidget.obscuringCharacter,
       "style": exportTextStyle(realWidget.style),
       "decoration": realWidget.decoration != null
           ? exportInputDecoration(realWidget.decoration as InputDecoration)
           : null,
+      "keyboardType": exportTextInputType(realWidget.keyboardType),
+      "inputFormatters": realWidget.inputFormatters?.isNotEmpty ?? false
+          ? realWidget.inputFormatters!.map((f) => exportInputFormatter(f)).toList()
+          : [],
     };
   }
 

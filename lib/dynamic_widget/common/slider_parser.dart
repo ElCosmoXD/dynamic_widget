@@ -6,8 +6,8 @@ class SliderParser extends WidgetParser {
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
       EventsListener? listener) {
-    String? valueChangedEvent = map.containsKey("value_changed_event")
-        ? map["value_changed_event"]
+    String? valueChangedEvent = map.containsKey("valueChangedEvent")
+        ? map["valueChangedEvent"]
         : null;
 
     int widgetId = map.containsKey("id") ? map["id"] : -1;
