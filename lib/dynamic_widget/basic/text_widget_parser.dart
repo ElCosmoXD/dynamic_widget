@@ -7,7 +7,14 @@ class TextWidgetParser implements WidgetParser {
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
       EventsListener? listener) {
+    int widgetId = map.containsKey("id") ? map["id"] : -1;
+
     String? data = map['data'];
+    if (widgetId != -1) {
+      DynamicWidgetBuilder.stateManager
+          .createStateIfNotExists(widgetId, null, data);
+    }
+
     String? textAlignString = map['textAlign'];
     String? overflow = map['overflow'];
     int? maxLines = map['maxLines'];
@@ -21,8 +28,9 @@ class TextWidgetParser implements WidgetParser {
       textSpan = textSpanParser.parse(map['textSpan'], listener);
     }
 
+    late Widget widget;
     if (textSpan == null) {
-      return Text(
+      widget = Text(
         data!,
         textAlign: parseTextAlign(textAlignString),
         overflow: parseTextOverflow(overflow),
@@ -34,7 +42,7 @@ class TextWidgetParser implements WidgetParser {
         textScaler: TextScaler.linear(textScaleFactor ?? 1.0),
       );
     } else {
-      return Text.rich(
+      widget = Text.rich(
         textSpan,
         textAlign: parseTextAlign(textAlignString),
         overflow: parseTextOverflow(overflow),
@@ -46,6 +54,12 @@ class TextWidgetParser implements WidgetParser {
         textScaler: TextScaler.linear(textScaleFactor ?? 1.0),
       );
     }
+
+    if (widgetId != -1) {
+      DynamicWidgetBuilder.stateManager.setStateWidget(widgetId, widget);
+    }
+    
+    return widget;
   }
 
   @override
@@ -57,6 +71,7 @@ class TextWidgetParser implements WidgetParser {
     if (realWidget.textSpan == null) {
       return <String, dynamic>{
         "type": "Text",
+        "id": -1,
         "data": realWidget.data,
         "textAlign": realWidget.textAlign != null
             ? exportTextAlign(realWidget.textAlign)
@@ -73,6 +88,7 @@ class TextWidgetParser implements WidgetParser {
       var parser = TextSpanParser();
       return <String, dynamic>{
         "type": "Text",
+        "id": -1,
         "textSpan": parser.export(realWidget.textSpan as TextSpan),
         "textAlign": realWidget.textAlign != null
             ? exportTextAlign(realWidget.textAlign)
