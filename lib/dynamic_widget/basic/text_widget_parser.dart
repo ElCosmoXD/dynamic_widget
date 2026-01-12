@@ -21,7 +21,7 @@ class TextWidgetParser implements WidgetParser {
     String? semanticsLabel = map['semanticsLabel'];
     bool? softWrap = map['softWrap'];
     String? textDirectionString = map['textDirection'];
-    double? textScaleFactor = map['textScaleFactor']?.toDouble();
+    var textScaler = parseTextScaler(map['textScaler'] ?? map['textScaleFactor']);
     var textSpan;
     var textSpanParser = TextSpanParser();
     if (map.containsKey("textSpan")) {
@@ -40,7 +40,7 @@ class TextWidgetParser implements WidgetParser {
         softWrap: softWrap,
         textDirection: parseTextDirection(textDirectionString),
         style: map.containsKey('style') ? parseTextStyle(map['style']) : null,
-        textScaler: TextScaler.linear(textScaleFactor ?? 1.0),
+        textScaler: textScaler,
       );
     } else {
       widget = Text.rich(
@@ -52,7 +52,7 @@ class TextWidgetParser implements WidgetParser {
         softWrap: softWrap,
         textDirection: parseTextDirection(textDirectionString),
         style: map.containsKey('style') ? parseTextStyle(map['style']) : null,
-        textScaler: TextScaler.linear(textScaleFactor ?? 1.0),
+        textScaler: textScaler,
       );
     }
 
@@ -83,7 +83,7 @@ class TextWidgetParser implements WidgetParser {
         "softWrap": realWidget.softWrap,
         "textDirection": exportTextDirection(realWidget.textDirection),
         "style": exportTextStyle(realWidget.style),
-        "textScaler": realWidget.textScaler ?? TextScaler.linear(1.0),
+        "textScaler": exportTextScaler(realWidget.textScaler),
       };
     } else {
       var parser = TextSpanParser();
@@ -100,7 +100,7 @@ class TextWidgetParser implements WidgetParser {
         "softWrap": realWidget.softWrap,
         "textDirection": exportTextDirection(realWidget.textDirection),
         "style": exportTextStyle(realWidget.style),
-        "textScaler": realWidget.textScaler ?? TextScaler.linear(1.0),
+        "textScaler": exportTextScaler(realWidget.textScaler),
       };
     }
   }

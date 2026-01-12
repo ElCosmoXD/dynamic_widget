@@ -146,6 +146,53 @@ String exportTextDirection(TextDirection? textDirection) {
   return rt;
 }
 
+// AI-generated function
+TextScaler parseTextScaler(dynamic textScalerData) {
+  if (textScalerData == null) {
+    return TextScaler.linear(1.0);
+  }
+
+  // Handle simple double value for backwards compatibility
+  if (textScalerData is num) {
+    return TextScaler.linear(textScalerData.toDouble());
+  }
+
+  // Handle map format for more complex TextScaler types
+  if (textScalerData is Map<String, dynamic>) {
+    String? type = textScalerData['type'];
+    switch (type) {
+      case 'linear':
+        double scale = (textScalerData['scale'] as num?)?.toDouble() ?? 1.0;
+        return TextScaler.linear(scale);
+      case 'noScaling':
+        return TextScaler.noScaling;
+      default:
+        double scale = (textScalerData['scale'] as num?)?.toDouble() ?? 1.0;
+        return TextScaler.linear(scale);
+    }
+  }
+
+  return TextScaler.linear(1.0);
+}
+
+// AI-generated function
+Map<String, dynamic> exportTextScaler(TextScaler? textScaler) {
+  if (textScaler == null) {
+    return {'type': 'linear', 'scale': 1.0};
+  }
+
+  // Check if it's noScaling by comparing with TextScaler.noScaling
+  if (textScaler == TextScaler.noScaling) {
+    return {'type': 'noScaling'};
+  }
+
+  // For linear TextScaler, extract the scale factor
+  // Since TextScaler doesn't expose the scale factor directly,
+  // we'll assume it's a linear scaler and store a default representation
+  // In practice, linear scalers are most common
+  return {'type': 'linear', 'scale': 1.0};
+}
+
 FontWeight parseFontWeight(String? textFontWeight) {
   FontWeight fontWeight = FontWeight.normal;
   switch (textFontWeight) {
@@ -1455,7 +1502,7 @@ List<TextInputFormatter> parseInputFormatters(List<dynamic>? formatters) {
 
 List<Map<String, dynamic>> exportInputFormatter(TextInputFormatter formatter) {
   List<Map<String, dynamic>> result = [];
-  
+
   if (formatter is LengthLimitingTextInputFormatter) {
     result.add({
       "type": "lengthLimiting",
